@@ -39,7 +39,7 @@
           <p class="text-start">Las abejas cumplen un rol fundamental en los ecosistemas: polinizan plantas con flores, es decir, trasladan el polen permitiendo que este fecunde a la flor, por lo que aseguran la reproducción de frutos y semillas, cuestión fundamental para la alimentación de miles de especies de todo el planeta, incluyéndonos. Es por esto que, tras la conmemoración del Día Mundial de las Abejas, te preguntamos: ¿sabes cómo son las especies de abejas que existen en Chile?</p>
         </b-col>
         <b-col cols="6" class="p-5">
-          <img class="img-fluid" src="../assets/img2.jpg" alt="">
+          <img class="img-fluid" src="../assets/img3.jpg" alt="">
         </b-col>
       </b-row>
     </b-container>

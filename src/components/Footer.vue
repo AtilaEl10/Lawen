@@ -1,12 +1,12 @@
 <template>
-    <div>
         <footer class="py-3">
-            <b-row>
-                <b-col cols="6">Todos los Derechos reservados</b-col>
-                <b-col cols="6">Todos los Derechos reservados</b-col>
-            </b-row>
+            <b-container>
+                <b-row>
+                    <b-col cols="6">Todos los Derechos reservados</b-col>
+                    <b-col cols="6">Todos los Derechos reservados</b-col>
+                </b-row>
+            </b-container>
         </footer>
-    </div>
 </template>
 
 <script>

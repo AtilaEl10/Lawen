@@ -7,12 +7,16 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 // Import Bootstrap an BootstrapVue CSS files (order is important)
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-
+//Firebase
+import firebase from "firebase"
+import { firebaseConfig } from "../firebase"
 // Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 
 Vue.config.productionTip = false;
 

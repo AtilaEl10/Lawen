@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div class="about pb-5">
     <header class="py-4">
       <h2 class="mt-5 pt-5 fw-bold">ABEJAS NATIVAS</h2>
       <b-col cols="8 mx-auto pb-5">
@@ -7,9 +7,13 @@
       </b-col>
     </header>  
     <section>
-      <b-container>
+      <b-container class="mt-5">
         <b-row>
-          
+          <Card v-for="(abeja, i) in especies" :key="i"
+          :img="abeja.img" :nombre="abeja.nombre" :nombrecien="abeja.nombrecien" 
+          :orden="abeja.orden" :familia="abeja.familia" :peligro="abeja.peligro" 
+          :tamano="abeja.tamano" :id="abeja.id" :caracteristicas="abeja.caracteristicas" :habitat="abeja.habitat"
+          />
         </b-row>
       </b-container>    
     </section>
@@ -24,3 +28,21 @@
     background-position: center;
   }
 </style>
+
+<script>
+import Card from "../components/Card.vue"
+import { mapState } from "vuex"
+
+export default {
+  name: "Especies",
+
+  components: {
+    Card,
+  },
+
+  computed: {
+    ...mapState(["especies"])
+  },
+
+}
+</script>

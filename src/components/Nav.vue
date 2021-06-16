@@ -1,43 +1,101 @@
 <template>
-    <div>
-        <b-navbar class="navbar-dark px-5 fixed-top" toggleable="sm">
+        <b-navbar class="navbar-dark fixed-top" toggleable="md">
+            <b-container>
+                <b-navbar-brand>
+                    <router-link class="fw-bold nav-link nav_text" to="/">Lawen</router-link>
+                </b-navbar-brand>
 
-            <b-navbar-brand>
-                <router-link class="fw-bold nav-link nav_text" to="/">Lawen</router-link>
-            </b-navbar-brand>
-
-            <b-navbar-toggle target="nav-text-collapse"></b-navbar-toggle>
-            <b-collapse id="nav-text-collapse" is-nav>
-            <b-navbar-nav class="ms-auto">
-                <b-nav-text>
-                    <router-link class="nav-link text-warning nav_text mx-1" to="/">Inicio</router-link>
-                </b-nav-text>
-                <b-nav-text>
-                    <router-link class="nav-link text-warning nav_text mx-1" to="/especies">Especies</router-link>
-                </b-nav-text>
-                <b-nav-text>
-                    <router-link class="nav-link text-warning nav_text mx-1" to="/ayuda">¿Cómo ayudar?</router-link>
-                </b-nav-text>
-                <!--Agregar un v-if para esta opcion-->
-                <b-nav-text>
-                    <router-link class="nav-link text-warning nav_text mx-1" to="/registro">Mi registro</router-link>
-                </b-nav-text>
-                <b-nav-text>
+                <b-navbar-toggle target="nav-text-collapse"></b-navbar-toggle>
+                <b-collapse id="nav-text-collapse" is-nav>
+                <b-navbar-nav class="ms-auto">
+                    <b-nav-text>
+                        <router-link class="nav-link text-warning nav_text mx-1" to="/">Inicio</router-link>
+                    </b-nav-text>
+                    <b-nav-text>
+                        <router-link class="nav-link text-warning nav_text mx-1" to="/especies">Especies</router-link>
+                    </b-nav-text>
+                    <b-nav-text>
+                        <router-link class="nav-link text-warning nav_text mx-1" to="/ayuda">¿Cómo ayudar?</router-link>
+                    </b-nav-text>
                     <!--Agregar un v-if para esta opcion-->
-                    <b-button @click="logout()" v-if="logueado" class="btn_log px-3 ms-3 text-dark fw-bold">Cerrar Sesión</b-button>
-                    <!--Agregar un v-else para esta opcion-->
-                    <b-button @click="login()" v-else class="btn_log px-3 ms-3 text-dark fw-bold">Iniciar Sesión</b-button>
-                </b-nav-text>
-            </b-navbar-nav>
-            </b-collapse>
-            
+                    <b-nav-text>
+                        <router-link class="nav-link text-warning nav_text mx-1" to="/registro">Mi registro</router-link>
+                    </b-nav-text>
+                    <b-nav-text>
+                        <!--Agregar un v-if para esta opcion-->
+                        <b-button @click="logout()" v-if="logueado" class="btn_logout px-3 ms-3 text-white fw-bold">Cerrar Sesión</b-button>
+                        <!--Agregar un v-else para esta opcion-->
+                        <b-button @click="$bvModal.show('bv-modal-example')" v-else class="btn_login px-3 ms-3 text-dark fw-bold">Iniciar Sesión</b-button>
+                    </b-nav-text>
+
+                    <!--Modal de Inicio de Sesión-->
+                    <b-modal id="bv-modal-example" hide-footer hide-header>
+                        <b-col cols="12" class="m-auto border rounded-2 p-5 shadow bg-light">
+                            <h2 class="fw-bold">Ingresar</h2>
+                            <b-form-group label="Correo electrónico:" description="Introduzca su correo" class="fw-bold text-start mt-4">
+                                <b-form-input v-model="form.email" type="email" placeholder="Correo Electrónico" required></b-form-input>
+                            </b-form-group>
+
+                            <b-form-group label="Contraseña" description="Introduzca su contraseña" class="mt-4 fw-bold text-start">
+                                <b-form-input v-model="form.pass" type="password" placeholder="Contraseña"></b-form-input>
+                            </b-form-group>
+
+                            <b-button @click="login(), $bvModal.hide('bv-modal-example')" type="button" variant="warning" class="mt-4 mx-2">Ingresar</b-button>
+                            <b-button @click="$bvModal.hide('bv-modal-example')" type="button" variant="danger" class="mt-4 mx-2">Cancelar</b-button>
+                        </b-col>
+                    </b-modal>
+                </b-navbar-nav>
+                </b-collapse>
+
+            </b-container>
+
         </b-navbar>
-    </div>
 </template>
 
 <script>
+import firebase from "firebase"
+
 export default {
-    name: "Nav"
+    name: "Nav",
+    data() {
+        return {
+            form: {
+                email: "",
+                pass: "",
+            },
+            logueado: false
+        };
+    },
+    methods: {
+       async login() {
+             if(!this.form && !this.form.email && !this.form.pass) return
+             console.log(this.form.email);
+             console.log(this.form.pass);
+            try {
+                const request = await firebase.auth().signInWithEmailAndPassword(this.form.email, this.form.pass)
+                console.log(request);
+                if(request && request !== null) {
+                    localStorage.setItem("login", "logueado")
+                    this.logueado = true
+                }
+            } catch (error) {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log("Codigo de error", errorCode);
+                console.log("Mensaje de error", errorMessage);
+            }
+        },
+        async logout() {
+            try {
+                await firebase.auth().signOut()
+                localStorage.setItem("login", "")
+                this.logueado = false
+                this.$router.push("/")
+            } catch (error) {
+                console.log("No se ha podido cerrar sesion", error);
+            }
+        }
+    },
 }
 </script>
 
@@ -49,12 +107,19 @@ export default {
     .nav_text {
         color: #FEBA0C;
     }
-    .btn_log {
+    .btn_login {
         background-color: #FEBA0C;
         border-radius: 25px;
     }
-    .btn_log:hover {
+    .btn_login:hover {
         background-color: #F5D52E;
+    }
+    .btn_logout {
+        background-color: #FB442E;
+        border-radius: 25px;
+    }
+    .btn_logout:hover {
+        background-color: #ac2f21;
     }
 
 </style>

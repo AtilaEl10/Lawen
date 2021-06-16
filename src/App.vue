@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Nav />
-    <router-view />
+    <router-view  class="wrapper"/>
     <Footer />
   </div>
 </template>
@@ -9,12 +9,20 @@
 <script>
 import Nav from "@/components/Nav.vue"
 import Footer from "@/components/Footer.vue"
+import { mapActions } from "vuex"
 
 export default {
   name: "App",
   components: {
     Nav,
     Footer
+  },
+  
+  methods: {
+    ...mapActions(["getData"]),
+  },
+  created() {
+    this.getData()
   }
 }
 </script>
@@ -27,8 +35,13 @@ export default {
   text-align: center;
   color: white;
   background-color: #221D23;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
-
+.wrapper{
+  flex: 1;
+}
 #nav a {
   font-weight: bold;
   color: #2c3e50;
@@ -40,4 +53,5 @@ export default {
 h1, h2, h3 {
   font-family: 'Maven Pro', sans-serif;
 }
+
 </style>
