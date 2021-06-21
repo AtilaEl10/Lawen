@@ -29,10 +29,10 @@
                 </b-col>
             </b-row>
             <div class="mt-3 align-self-end">
-                <a class="mx-4 text-success" href="#" variant="primary">Mas información</a>
-                <b-button 
+                <router-link class="mx-4 text-success" :to="{name: 'Abejas', params:{id:id}}" variant="primary">Mas información</router-link>
+                <b-button v-if="log"
                     @click="registrarAbeja({id:id, img:img, nombre:nombre, nombrecien:nombrecien, orden:orden, familia:familia, caracteristicas:caracteristicas, habitat:habitat})" 
-                    class="mx-4" href="#" variant="warning"
+                    class="mx-4 col-10 mt-3" href="#" variant="warning"
                 >Registrar</b-button>
             </div>
         </b-card>
@@ -75,6 +75,9 @@ export default {
         },
         habitat: {
             type: String,
+        },
+        log: {
+            type: Boolean
         }
     },
     methods: {

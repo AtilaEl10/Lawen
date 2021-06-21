@@ -19,13 +19,13 @@
                     </b-nav-text>
                     <!--Agregar un v-if para esta opcion-->
                     <b-nav-text>
-                        <router-link class="nav-link text-warning nav_text mx-1" to="/registro">Mi registro</router-link>
+                        <router-link class="nav-link text-warning nav_text mx-1" v-if="log" to="/registro">Mi registro</router-link>
                     </b-nav-text>
                     <b-nav-text>
                         <!--Agregar un v-if para esta opcion-->
-                        <b-button @click="logout()" v-if="logueado" class="btn_logout px-3 ms-3 text-white fw-bold">Cerrar Sesión</b-button>
+                        <b-button @click="$bvModal.show('bv-modal-example')" v-if="!log" class="btn_login px-3 ms-3 text-dark fw-bold">Iniciar Sesión</b-button>
                         <!--Agregar un v-else para esta opcion-->
-                        <b-button @click="$bvModal.show('bv-modal-example')" v-else class="btn_login px-3 ms-3 text-dark fw-bold">Iniciar Sesión</b-button>
+                        <b-button @click="logout()" v-else class="btn_logout px-3 ms-3 text-white fw-bold">Cerrar Sesión</b-button>
                     </b-nav-text>
 
                     <!--Modal de Inicio de Sesión-->
@@ -53,48 +53,17 @@
 </template>
 
 <script>
-import firebase from "firebase"
+//import firebase from "firebase"
+import { mapMutations, mapState } from "vuex";
 
 export default {
     name: "Nav",
-    data() {
-        return {
-            form: {
-                email: "",
-                pass: "",
-            },
-            logueado: false
-        };
-    },
+
     methods: {
-       async login() {
-             if(!this.form && !this.form.email && !this.form.pass) return
-             console.log(this.form.email);
-             console.log(this.form.pass);
-            try {
-                const request = await firebase.auth().signInWithEmailAndPassword(this.form.email, this.form.pass)
-                console.log(request);
-                if(request && request !== null) {
-                    localStorage.setItem("login", "logueado")
-                    this.logueado = true
-                }
-            } catch (error) {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log("Codigo de error", errorCode);
-                console.log("Mensaje de error", errorMessage);
-            }
-        },
-        async logout() {
-            try {
-                await firebase.auth().signOut()
-                localStorage.setItem("login", "")
-                this.logueado = false
-                this.$router.push("/")
-            } catch (error) {
-                console.log("No se ha podido cerrar sesion", error);
-            }
-        }
+    ...mapMutations(["login", "logout",]),
+    },
+    computed: {
+    ...mapState(["log", "form"])
     },
 }
 </script>

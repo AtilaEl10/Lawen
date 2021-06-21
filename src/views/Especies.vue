@@ -12,7 +12,7 @@
           <Card v-for="(abeja, i) in especies" :key="i"
           :img="abeja.img" :nombre="abeja.nombre" :nombrecien="abeja.nombrecien" 
           :orden="abeja.orden" :familia="abeja.familia" :peligro="abeja.peligro" 
-          :tamano="abeja.tamano" :id="abeja.id" :caracteristicas="abeja.caracteristicas" :habitat="abeja.habitat"
+          :tamano="abeja.tamano" :id="abeja.id" :caracteristicas="abeja.caracteristicas" :habitat="abeja.habitat" :log="log"
           />
         </b-row>
       </b-container>    
@@ -41,7 +41,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["especies"])
+    ...mapState(["especies", "log"])
   },
 
 }

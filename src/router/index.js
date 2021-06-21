@@ -17,6 +17,12 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/Especies.vue"),
   },
   {
+    path: "/especies/:id",
+    name: "Abejas",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Abejas.vue"),
+  },
+  {
     path: "/registro",
     name: "Registro",
     component: () =>
@@ -28,6 +34,13 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Ayuda.vue"),
   },
+  {
+    path: "*",
+    name: "Error",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Error.vue"),
+  },
+  //Temporal vista de las abejas
 ];
 
 const router = new VueRouter({

@@ -18,6 +18,17 @@ Vue.use(IconsPlugin)
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+router.beforeEach((to, from, next) => {
+  const isAuthenticated= localStorage.getItem("login")
+
+  console.log(isAuthenticated);
+  if(to.name == "Registro" && to.name !== "Home" && isAuthenticated !== "logueado") next({ name: "Home" });
+  next();
+});
+
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+ 
+
 Vue.config.productionTip = false;
 
 new Vue({
