@@ -1,45 +1,50 @@
 <template>
   <div id="app">
     <Nav />
-    <router-view  class="wrapper"/>
+    <router-view class="wrapper" />
     <Footer />
   </div>
 </template>
 
 <script>
-import Nav from "@/components/Nav.vue"
-import Footer from "@/components/Footer.vue"
-import { mapActions } from "vuex"
+import Nav from "@/components/Nav.vue";
+import Footer from "@/components/Footer.vue";
+import { mapActions } from "vuex";
 
 export default {
   name: "App",
   components: {
     Nav,
-    Footer
+    Footer,
   },
-  
+
   methods: {
-    ...mapActions(["getData"]),
+    ...mapActions(["getData", "getRegistro"]),
+    limpiar() {
+      localStorage.clear();
+    },
   },
   created() {
-    this.getData()
-  }
-}
+    this.getData();
+    this.getRegistro();
+    this.limpiar();
+  },
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: white;
-  background-color: #221D23;
+  background-color: #221d23;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
-.wrapper{
+.wrapper {
   flex: 1;
 }
 #nav a {
@@ -50,8 +55,9 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
-h1, h2, h3 {
-  font-family: 'Maven Pro', sans-serif;
+h1,
+h2,
+h3 {
+  font-family: "Maven Pro", sans-serif;
 }
-
 </style>

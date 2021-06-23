@@ -3,8 +3,9 @@ import Vuex from "vuex";
 import axios from "axios";
 import firebase from "firebase";
 import router from "@/router/index.js";
+// import VuexPersistance from "vuex-persist";
 
-// import createPersistedState from "vuex-persistedstate";
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
@@ -19,7 +20,7 @@ export default new Vuex.Store({
 
     //Agregar info a firebase
     registro: {
-      id: "",
+      registroId: "",
       ubicacion: {
         ref: "",
         comuna: "",
@@ -27,8 +28,9 @@ export default new Vuex.Store({
       },
       linkImg: "",
     },
+    registroAbejas: [],
   },
-  // plugins: [createPersistedState()],
+  plugins: [createPersistedState()],
 
   mutations: {
     //Log in
@@ -100,8 +102,18 @@ export default new Vuex.Store({
     },
     //Pasar data al registro
     agregarInfo(state, payload) {
-      const id = payload.id;
-      state.registro.id = id;
+      const registroId = payload.id;
+      state.registro.registroId = registroId;
+    },
+    // Guardar data de Firebase
+    guardarAbejas(state, payload) {
+      const abeja = payload;
+      if (!abeja) return;
+
+      const repetido = state.registroAbejas.find((bee) => bee.id === abeja.id);
+      if (!repetido) state.registroAbejas.push(abeja);
+
+      console.log(state.registroAbejas);
     },
   },
 
@@ -121,12 +133,37 @@ export default new Vuex.Store({
     },
 
     //Agregar registro a firebase
-    async agregarRegistro(payload) {
-      const db = firebase.firestore()
-      const registro = payload
-      if(!registro) return
+    async agregarRegistro({ commit }, payload) {
+      const db = firebase.firestore();
+      const registro = payload;
+      if (!registro) return;
 
-      await db.collection("registroAbejas").add(registro)
-    }
+      await db.collection("registroAbejas").add(registro);
+      commit();
+    },
+
+    // Obtener info de firebase
+    async getRegistro({ commit }) {
+      const db = firebase.firestore();
+      try {
+        const request = await db.collection("registroAbejas").get();
+        if (request) {
+          request.docs.forEach((abeja) => {
+            const obj = abeja.data();
+            const id = abeja.id;
+            obj.id = id;
+            commit("guardarAbejas", obj);
+          });
+        }
+      } catch (error) {
+        console.log("Error en la obtencion de la Data de Firebase", error);
+      }
+    },
   },
+  /*plugins: [
+    new VuexPersistance({
+      storage: window.localStorage,
+    }).plugin,
+    
+  ],*/
 });

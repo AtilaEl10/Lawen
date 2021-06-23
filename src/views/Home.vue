@@ -1,11 +1,7 @@
 <template>
   <div class="home">
     <div class="header pt-5">
-      <b-carousel
-        id="carousel-fade"
-        fade
-        indicators
-      >
+      <b-carousel id="carousel-fade" fade indicators>
         <b-carousel-slide
           img-src="https://firebasestorage.googleapis.com/v0/b/proyecto-abejas-9bc20.appspot.com/o/slide1%20copia.jpg?alt=media&token=a9e4b3ef-6c71-4b3e-8917-fdbc584332e2"
         >
@@ -31,15 +27,24 @@
     </div>
 
     <b-container>
-      <b-row  class="py-5">
+      <b-row class="py-5">
         <b-col cols="12">
           <h2 class="fw-bold">¿POR QUÉ SON TAN IMPORTANTE LAS ABEJAS?</h2>
         </b-col>
         <b-col cols="6" class="p-5">
-          <p class="text-start">Las abejas cumplen un rol fundamental en los ecosistemas: polinizan plantas con flores, es decir, trasladan el polen permitiendo que este fecunde a la flor, por lo que aseguran la reproducción de frutos y semillas, cuestión fundamental para la alimentación de miles de especies de todo el planeta, incluyéndonos. Es por esto que, tras la conmemoración del Día Mundial de las Abejas, te preguntamos: ¿sabes cómo son las especies de abejas que existen en Chile?</p>
+          <p class="text-start">
+            Las abejas cumplen un rol fundamental en los ecosistemas: polinizan
+            plantas con flores, es decir, trasladan el polen permitiendo que
+            este fecunde a la flor, por lo que aseguran la reproducción de
+            frutos y semillas, cuestión fundamental para la alimentación de
+            miles de especies de todo el planeta, incluyéndonos. Es por esto
+            que, tras la conmemoración del Día Mundial de las Abejas, te
+            preguntamos: ¿sabes cómo son las especies de abejas que existen en
+            Chile?
+          </p>
         </b-col>
         <b-col cols="6" class="p-5">
-          <img class="img-fluid" src="../assets/img3.jpg" alt="">
+          <img class="img-fluid" src="../assets/img3.jpg" alt="" />
         </b-col>
       </b-row>
     </b-container>
@@ -52,23 +57,23 @@
 export default {
   name: "Home",
   components: {
-  //
+    //
   },
 };
 </script>
 
 <style scoped>
-  .header {
-    background-image: url("https://firebasestorage.googleapis.com/v0/b/proyecto-abejas-9bc20.appspot.com/o/slide1%20copia.jpg?alt=media&token=a9e4b3ef-6c71-4b3e-8917-fdbc584332e2");
-    background-size: cover;
-  }
-  .header_slide1 {
-    background-color:#f5d42e4b;
-  }
-  .header_slide2 {
-    background-color:#fb422e46;
-  }
-  .header_slide3 {
-    background-color:#0ab1124b;
-  }
+.header {
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/proyecto-abejas-9bc20.appspot.com/o/slide1%20copia.jpg?alt=media&token=a9e4b3ef-6c71-4b3e-8917-fdbc584332e2");
+  background-size: cover;
+}
+.header_slide1 {
+  background-color: #f5d42e4b;
+}
+.header_slide2 {
+  background-color: #fb422e46;
+}
+.header_slide3 {
+  background-color: #0ab1124b;
+}
 </style>
