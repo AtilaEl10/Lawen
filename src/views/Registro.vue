@@ -63,20 +63,20 @@
                     <div class="mt-3">
                       <router-link
                         class="mx-4 text-success"
-                        :to="{ name: 'Abejas', params: { id: misAbejas.id } }"
+                        :to="{ name: 'Abejas', params: { id: misAbejas.abejaId } }"
                         variant="primary"
                         >Mas información</router-link
                       >
                       <b-button
                         @click="
-                          agregarInfo({ id: misAbejas.id }),
+                          agregarInfo({id: misAbejas.id }),
                             $bvModal.show('bv-modal-example3')
                         "
                         class="mx-4"
                         variant="dark"
                         >Reportar avistamiento</b-button
                       >
-                      <b-button class="mx-4" variant="dark">Eliminar</b-button>
+                      <b-button @click="borrarAbeja(misAbejas)" class="mx-4" variant="dark">Eliminar</b-button>
                     </div>
                   </b-card-body>
                 </b-col>
@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 import EditForm from "../components/EditForm.vue";
 
 export default {
@@ -110,6 +110,11 @@ export default {
   },
   methods: {
     ...mapMutations(["agregarInfo"]),
+    ...mapActions(["borrarAbejas"]),
+
+    borrarAbeja(abeja){
+      this.borrarAbejas(abeja)
+    }
   },
 };
 </script>

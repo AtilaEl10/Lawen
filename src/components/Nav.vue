@@ -1,9 +1,9 @@
 <template>
-  <b-navbar class="navbar-dark fixed-top" toggleable="md">
+  <b-navbar class="navbar-dark fixed-top text-uppercase fw-bold" toggleable="md">
     <b-container>
       <b-navbar-brand>
-        <router-link class="fw-bold nav-link nav_text" to="/"
-          >Lawen</router-link
+        <router-link class="fw-bold nav-link nav_text img-fluid" to="/"
+          ><img src="../assets/logo.png" alt="logo lawen" class="img-fluid"></router-link
         >
       </b-navbar-brand>
 
@@ -11,28 +11,30 @@
       <b-collapse id="nav-text-collapse" is-nav>
         <b-navbar-nav class="ms-auto">
           <b-nav-text>
-            <router-link class="nav-link text-warning nav_text mx-1" to="/"
+            <router-link class="nav-link mx-1" to="/" style="color: #f58b13"
               >Inicio</router-link
             >
           </b-nav-text>
           <b-nav-text>
             <router-link
-              class="nav-link text-warning nav_text mx-1"
+              class="nav-link mx-1"
               to="/especies"
+              style="color: #f58b13"
               >Especies</router-link
             >
           </b-nav-text>
           <b-nav-text>
-            <router-link class="nav-link text-warning nav_text mx-1" to="/ayuda"
+            <router-link class="nav-link mx-1" to="/ayuda" style="color: #f58b13"
               >¿Cómo ayudar?</router-link
             >
           </b-nav-text>
           <!--Agregar un v-if para esta opcion-->
           <b-nav-text>
             <router-link
-              class="nav-link text-warning nav_text mx-1"
+              class="nav-link mx-1"
               v-if="log"
               to="/registro"
+              style="color: #f58b13"
               >Mi registro</router-link
             >
           </b-nav-text>
@@ -41,7 +43,7 @@
             <b-button
               @click="$bvModal.show('bv-modal-example')"
               v-if="!log"
-              class="btn_login px-3 ms-3 text-dark fw-bold"
+              class="btn_login px-3 ms-3 text-light fw-bold"
               >Iniciar Sesión</b-button
             >
             <!--Agregar un v-else para esta opcion-->
@@ -89,14 +91,14 @@
                 @click="login(), $bvModal.hide('bv-modal-example')"
                 type="button"
                 variant="warning"
-                class="mt-4 mx-2"
+                class="mt-4 mx-2 text-uppercase"
                 >Ingresar</b-button
               >
               <b-button
                 @click="$bvModal.hide('bv-modal-example')"
                 type="button"
                 variant="danger"
-                class="mt-4 mx-2"
+                class="mt-4 mx-2 text-uppercase"
                 >Cancelar</b-button
               >
             </b-col>
@@ -128,21 +130,22 @@ nav {
   opacity: 0.85;
   background-color: #121013;
 }
-.nav_text {
-  color: #feba0c;
+router-link {
+  color: #f58b13;
 }
+
 .btn_login {
-  background-color: #feba0c;
+  background-color: #f58b13;
   border-radius: 25px;
 }
-.btn_login:hover {
-  background-color: #f5d52e;
+.btn_login:hover, .btn_login:focus  {
+  background-color: #cc6f05;
 }
 .btn_logout {
-  background-color: #fb442e;
+  background-color: #e04a1c;
   border-radius: 25px;
 }
-.btn_logout:hover {
+.btn_logout:hover, .btn_logout:focus {
   background-color: #ac2f21;
 }
 </style>

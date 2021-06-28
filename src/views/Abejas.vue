@@ -225,10 +225,11 @@
                 <b-button
                   @click="$bvModal.hide(abejaRegistrada.id)"
                   type="button"
-                  variant="danger"
+                  variant="success"
                   class="mt-4 col-12"
                   >Cerrar</b-button
                 >
+                <b-button @click="borrarImg(abejaRegistrada)" type="button" variant="danger" class="mt-4 col-12">Eliminar imagen</b-button>
               </b-col>
             </b-modal>
           </b-col>
@@ -283,7 +284,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 
 export default {
   name: "Abejas",
@@ -315,6 +316,14 @@ export default {
 
   methods: {
     ...mapMutations(["registrarAbeja"]),
+    ...mapActions(["borrarRegistro", "getRegistro"]),
+
+    borrarImg(registro){
+      this.borrarRegistro(registro)
+      this.registroAbejas = []
+      this.getRegistro();
+    },
+
 
     linkClass(idx) {
       if (this.tabIndex === idx) {

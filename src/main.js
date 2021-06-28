@@ -31,7 +31,7 @@ router.beforeEach((to, from, next) => {
   next();
 });
 
-firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
 
 Vue.config.productionTip = false;
 

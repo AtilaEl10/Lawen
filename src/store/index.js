@@ -71,7 +71,7 @@ export default new Vuex.Store({
       state.especies = payload;
       // console.log(state.especies);
     },
-    // Agregar Abejas al registro
+    /*
     registrarAbeja(state, payload) {
       const id = payload.id;
       const img = payload.img;
@@ -100,20 +100,72 @@ export default new Vuex.Store({
         alert("Ya tienes esta abeja en tu registro");
       }
     },
+    */
+    // Agregar Abejas al registro en firebase
+    async registrarAbeja(state, payload) {
+      const db = firebase.firestore();
+      const abejaId = payload.id;
+      const img = payload.img;
+      const nombre = payload.nombre;
+      const nombrecien = payload.nombrecien;
+      const orden = payload.orden;
+      const familia = payload.familia;
+      const caracteristicas = payload.caracteristicas;
+      const habitat = payload.habitat;
+
+      const finder = state.registradas.find((obj) => obj.abejaId === abejaId);
+      if (!finder) {
+        const obj = {
+          abejaId: abejaId,
+          img: img,
+          nombre: nombre,
+          nombrecien: nombrecien,
+          orden: orden,
+          familia: familia,
+          caracteristicas: caracteristicas,
+          habitat: habitat,
+        };
+        await db.collection("registradas").add(obj);
+        router.push("/registro")
+      } else {
+        alert("Ya tienes esta abeja en tu registro");
+      }
+    },
     //Pasar data al registro
     agregarInfo(state, payload) {
       const registroId = payload.id;
       state.registro.registroId = registroId;
     },
+
+    // Guardar data de Firebase de registros
+    guardarRegistros(state, payload) {
+      const abejita = payload;
+      if (!abejita) return;
+
+      const repetido = state.registradas.find((bee) => bee.id === abejita.id);
+      if (!repetido) state.registradas.push(abejita);
+
+      console.log(state.registradas);
+    },
+
     // Guardar data de Firebase
     guardarAbejas(state, payload) {
       const abeja = payload;
       if (!abeja) return;
 
-      const repetido = state.registroAbejas.find((bee) => bee.id === abeja.id);
+      const repetido = state.registroAbejas.find(
+        (bee) => bee.id === abeja.id
+      );
       if (!repetido) state.registroAbejas.push(abeja);
 
       console.log(state.registroAbejas);
+    },
+    //Eliminar Abeja
+    eliminarAbeja(state, payload){
+      const abeja = payload;
+      if(!abeja) return
+      const index = state.registradas.indexOf(abeja)
+      state.registradas.splice(index, 1)
     },
   },
 
@@ -142,7 +194,7 @@ export default new Vuex.Store({
       commit();
     },
 
-    // Obtener info de firebase
+    // Obtener info de firebase de las imagenes individuales
     async getRegistro({ commit }) {
       const db = firebase.firestore();
       try {
@@ -159,6 +211,42 @@ export default new Vuex.Store({
         console.log("Error en la obtencion de la Data de Firebase", error);
       }
     },
+    // Obtener info de firebase de cada abeja
+    async getAbejaFirebase({ commit }) {
+      const db = firebase.firestore();
+      try {
+        const request = await db.collection("registradas").get();
+        if (request) {
+          request.docs.forEach((abejita) => {
+            const obj = abejita.data();
+            const id = abejita.id;
+            obj.id = id;
+            commit("guardarRegistros", obj);
+          });
+        }
+      } catch (error) {
+        console.log("Error en la obtencion de la Data de Firebase", error);
+      }
+    },
+
+    // Borrar abejas del registro
+    async borrarAbejas({commit}, payload) {
+      // Se borra de Firebase
+      const abeja = payload;
+      if(!abeja) return
+      
+      commit("eliminarAbeja", abeja)
+      const idFirebase = payload.id
+      console.log(idFirebase);
+      await firebase.firestore().collection("registradas").doc(idFirebase).delete()   
+    },
+    // Borrar abejas del registro
+    async borrarRegistro({commit}, payload) {
+      const idFirebase = payload.id
+      console.log(idFirebase);
+      commit()
+      await firebase.firestore().collection("registroAbejas").doc(idFirebase).delete()   
+    }
   },
   /*plugins: [
     new VuexPersistance({

@@ -19,7 +19,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["getData", "getRegistro"]),
+    ...mapActions(["getData", "getRegistro", "getAbejaFirebase"]),
     limpiar() {
       localStorage.clear();
     },
@@ -27,6 +27,7 @@ export default {
   created() {
     this.getData();
     this.getRegistro();
+    this.getAbejaFirebase();
     this.limpiar();
   },
 };
@@ -60,4 +61,5 @@ h2,
 h3 {
   font-family: "Maven Pro", sans-serif;
 }
+
 </style>

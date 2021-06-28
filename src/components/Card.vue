@@ -76,7 +76,8 @@
               familia: familia,
               caracteristicas: caracteristicas,
               habitat: habitat,
-            })
+            }), 
+            getAbejaFirebase()
           "
           class="mx-4 col-10 mt-3"
           href="#"
@@ -89,7 +90,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapActions } from "vuex";
 
 export default {
   name: "Card",
@@ -130,6 +131,8 @@ export default {
   },
   methods: {
     ...mapMutations(["registrarAbeja"]),
+    ...mapActions(["getAbejaFirebase"]),
+
   },
 };
 </script>
