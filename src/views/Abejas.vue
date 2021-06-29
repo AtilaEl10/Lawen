@@ -8,21 +8,22 @@
           </div>
           <b-button
             v-if="log"
-            @click="
-              registrarAbeja({
-                id: abeja.id,
-                img: abeja.img,
-                nombre: abeja.nombre,
-                nombrecien: abeja.nombrecien,
-                orden: abeja.orden,
-                familia: abeja.familia,
-                caracteristicas: abeja.caracteristicas,
-                habitat: abeja.habitat,
-              })
-            "
-            class="mx-4 col-10 mt-3"
-            href="#"
-            variant="warning"
+          @click="
+            registrarAbeja({
+              id: abeja.id,
+              img: abeja.img,
+              nombre: abeja.nombre,
+              nombrecien: abeja.nombrecien,
+              orden: abeja.orden,
+              familia: abeja.familia,
+              caracteristicas: abeja.caracteristicas,
+              habitat: abeja.habitat,
+            }), 
+            getAbejaFirebase()
+          "
+            v-b-tooltip.hover
+            title="Haz click para agregar al registro"
+            class="mx-4 col-10 mt-3 btn_primary fw-bold text-dark"
             >Agregar al Registro</b-button
           >
         </b-col>
@@ -196,13 +197,14 @@
             cols="12"
             v-for="(abejaRegistrada, i) in abejasFiltradas"
             :key="i"
+            class="mt-3"
           >
             <a @click="$bvModal.show(abejaRegistrada.id)">
               <b-carousel-slide
                 class="px-2"
                 :img-src="abejaRegistrada.linkImg"
-                style="cursor: pointer"
-                img-class=" img-fluid"
+                style="cursor: pointer; height: 220px; object-fit:cover"
+                img-class="img-fluid"
               >
               </b-carousel-slide
             ></a>
@@ -217,19 +219,20 @@
                 class="m-auto border rounded-2 p-5 shadow bg-light bee"
               >
                 <img :src="abejaRegistrada.linkImg" class="img-fluid" />
-                <p>
+                <h5 class="text-center mt-3">
                   {{ abejaRegistrada.ubicacion.ref }},
                   {{ abejaRegistrada.ubicacion.comuna }},
                   {{ abejaRegistrada.ubicacion.region }}
-                </p>
-                <b-button
-                  @click="$bvModal.hide(abejaRegistrada.id)"
-                  type="button"
-                  variant="success"
-                  class="mt-4 col-12"
-                  >Cerrar</b-button
-                >
-                <b-button @click="borrarImg(abejaRegistrada)" type="button" variant="danger" class="mt-4 col-12">Eliminar imagen</b-button>
+                </h5>
+                <b-button @click="borrarImg(abejaRegistrada), $bvModal.hide(abejaRegistrada.id)" v-if="log" type="button" variant="danger" class="mt-4 col-12 fw-bold text-light" style="border-radius:25px">Eliminar imagen</b-button>
+                <b-col cols="6" class="mx-auto">
+                  <b-button
+                    @click="$bvModal.hide(abejaRegistrada.id)"
+                    type="button"
+                    class="mt-4 col-12 btn_secundary"
+                    >Cerrar</b-button
+                  >
+                </b-col>
               </b-col>
             </b-modal>
           </b-col>
@@ -240,13 +243,13 @@
               cols="3"
               v-for="(abejaRegistrada, i) in abejasFiltradas"
               :key="i"
-              style="height: 150px"
+              class="mt-3"
             >
               <a @click="$bvModal.show(abejaRegistrada.id)">
                 <img
                   :src="abejaRegistrada.linkImg"
                   class="d-block w-100 img-fluid"
-                  style="object-fit: cover"
+                  style="object-fit: cover; height: 100px; width:100px"
                 />
               </a>
             </b-col>
@@ -260,23 +263,25 @@
       </h3>
       <b-button
         v-if="log"
-        @click="
-          registrarAbeja({
-            id: abeja.id,
-            img: abeja.img,
-            nombre: abeja.nombre,
-            nombrecien: abeja.nombrecien,
-            orden: abeja.orden,
-            familia: abeja.familia,
-            caracteristicas: abeja.caracteristicas,
-            habitat: abeja.habitat,
-          })
-        "
-        class="mx-auto col-6 mt-3"
-        variant="warning"
+          @click="
+            registrarAbeja({
+              id: abeja.id,
+              img: abeja.img,
+              nombre: abeja.nombre,
+              nombrecien: abeja.nombrecien,
+              orden: abeja.orden,
+              familia: abeja.familia,
+              caracteristicas: abeja.caracteristicas,
+              habitat: abeja.habitat,
+            }), 
+            getAbejaFirebase()
+          "
+        v-b-tooltip.hover
+        title="Haz click para agregar al registro"
+        class="mx-auto col-6 mt-3 btn_primary fw-bold text-dark"
         >Agregar al Registro</b-button
       >
-      <b-button v-else variant="warning"
+      <b-button v-else class="btn_primary"
         >Solo los usuarios registrados pueden añadir imágenes</b-button
       >
     </div>
@@ -316,12 +321,14 @@ export default {
 
   methods: {
     ...mapMutations(["registrarAbeja"]),
-    ...mapActions(["borrarRegistro", "getRegistro"]),
+    ...mapActions(["borrarRegistro", "getRegistro", "getAbejaFirebase"]),
 
     borrarImg(registro){
-      this.borrarRegistro(registro)
-      this.registroAbejas = []
-      this.getRegistro();
+      const result = confirm("¿Seguro que quieres eliminar esta imagen del Registro?")
+      if (result === true) {
+        this.borrarRegistro(registro)
+        this.getRegistro();
+      }
     },
 
 
@@ -360,4 +367,17 @@ span {
   font-family: "Roboto Condensed", sans-serif;
   background-image: url("../assets/card.jpg");
 }
+    .btn_primary {
+      background-color: #f58b13;
+      border-radius: 25px;
+      border: 0;
+    }
+    .btn_primary:hover, .btn_primary:focus  {
+      background-color: #cc6f05;
+    }
+    .btn_secundary {
+      background-color: #e04a1c;
+      border-radius: 25px;
+      border: 0;
+    }
 </style>

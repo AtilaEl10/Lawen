@@ -137,6 +137,7 @@ router-link {
 .btn_login {
   background-color: #f58b13;
   border-radius: 25px;
+  border: 0;
 }
 .btn_login:hover, .btn_login:focus  {
   background-color: #cc6f05;
@@ -144,6 +145,7 @@ router-link {
 .btn_logout {
   background-color: #e04a1c;
   border-radius: 25px;
+  border: 0;
 }
 .btn_logout:hover, .btn_logout:focus {
   background-color: #ac2f21;

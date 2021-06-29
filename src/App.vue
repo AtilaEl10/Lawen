@@ -19,7 +19,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["getData", "getRegistro", "getAbejaFirebase"]),
+    ...mapActions(["getData", "getRegistro", "getAbejaFirebase", "log"]),
     limpiar() {
       localStorage.clear();
     },
@@ -29,6 +29,7 @@ export default {
     this.getRegistro();
     this.getAbejaFirebase();
     this.limpiar();
+    // this.log()
   },
 };
 </script>

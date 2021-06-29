@@ -7,7 +7,9 @@
       class="mb-2 bee"
       style="height: 100%"
     >
+    <div class="img_container">
       <img class="img-fluid" :src="img" />
+    </div>
       <h4 class="fw-bold pt-4">{{ nombre }}</h4>
       <p class="fst-italic">{{ nombrecien }}</p>
       <b-row>
@@ -79,8 +81,9 @@
             }), 
             getAbejaFirebase()
           "
-          class="mx-4 col-10 mt-3"
-          href="#"
+          v-b-tooltip.hover
+          title="Haz click para agregar al registro"
+          class="btn_primary mx-4 col-10 mt-3 text-white fw-bold"
           variant="warning"
           >Agregar al Registro</b-button
         >
@@ -152,4 +155,25 @@ span {
 .show {
   display: block;
 }
+.img_container img {
+  height: 300px;
+  width: 100%;
+  object-fit: cover;
+}
+    .btn_primary {
+      background-color: #f58b13;
+      border-radius: 25px;
+      border: 0;
+    }
+    .btn_primary:hover, .btn_primary:focus  {
+      background-color: #cc6f05;
+    }
+  @media only screen and (max-width: 770px) {
+.img_container img {
+  height: auto;
+  object-fit: fill;
+}
+  
+}
+
 </style>

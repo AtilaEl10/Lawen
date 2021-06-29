@@ -20,17 +20,17 @@ firebase.initializeApp(firebaseConfig);
 
 router.beforeEach((to, from, next) => {
   const isAuthenticated = localStorage.getItem("login");
-
+  
   console.log(isAuthenticated);
   if (
     to.name == "Registro" &&
     to.name !== "Home" &&
     isAuthenticated !== "logueado"
-  )
+    )
     next({ name: "Home" });
-  next();
-});
-
+    next();
+  });
+  
 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
 
 Vue.config.productionTip = false;

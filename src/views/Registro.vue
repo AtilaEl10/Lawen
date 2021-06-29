@@ -1,21 +1,16 @@
 <template>
   <div class="about pb-5">
     <header class="py-4">
-      <h2 class="mt-5 pt-5 fw-bold">ABEJAS NATIVAS</h2>
+      <h2 class="display-6 mt-5 pt-5 fw-bold">MI REGISTRO DE ABEJAS</h2>
       <b-col cols="8 mx-auto pb-5">
-        <p class="pt-5">
-          En el mundo existen casi 20.000 especies de abejas agrupadas en siete
-          grandes familias. Actualmente en Chile se han registrado ¡463 especies
-          de abejas! pertenecientes a cinco de estas familias, se presume que
-          podríamos llegar a tener más de 800 especies de abejas en Chile y el
-          70% de las especies que se han descrito a la fecha son abejas
-          endémicas.
+        <p class="rounded mt-5 p-2 bg-dark">
+          Acá encontrarás las abejas que has podido avistar, puedes agregar mas información de cada una, ingresando la imagen y el lugar en dónde la encontraste
         </p>
       </b-col>
     </header>
     <section>
       <b-container class="mt-5">
-        <b-row>
+        <b-row v-if="registradas.length > 0">
           <b-col
             cols="12"
             lg="10"
@@ -61,28 +56,45 @@
                       <strong>NIDO: </strong> {{ misAbejas.habitat }}
                     </b-card-text>
                     <div class="mt-3">
-                      <router-link
-                        class="mx-4 text-success"
-                        :to="{ name: 'Abejas', params: { id: misAbejas.abejaId } }"
-                        variant="primary"
-                        >Mas información</router-link
-                      >
-                      <b-button
-                        @click="
-                          agregarInfo({id: misAbejas.id }),
-                            $bvModal.show('bv-modal-example3')
-                        "
-                        class="mx-4"
-                        variant="dark"
-                        >Reportar avistamiento</b-button
-                      >
-                      <b-button @click="borrarAbeja(misAbejas)" class="mx-4" variant="dark">Eliminar</b-button>
+                        <router-link
+                          class="mx-auto text-success"
+                          :to="{ name: 'Abejas', params: { id: misAbejas.abejaId } }"
+                          variant="primary"
+                          >Mas información</router-link
+                        >
+                      <b-row class="mt-5 mb-3">
+                        <b-col cols="10" md="5" class="mb-3 mx-auto">
+                          <b-button
+                            @click="
+                              agregarInfo({id: misAbejas.abejaId }),
+                                $bvModal.show('bv-modal-example3')
+                            "
+                            class="col-12"
+                            variant="dark"
+                            v-b-tooltip.hover
+                            title="Haz click para añadir información"
+                            >Reportar avistamiento</b-button
+                          >
+                        </b-col>
+                        <b-col cols="10" md="5" class="mb-3 mx-auto">
+                          <b-button @click="borrarAbeja(misAbejas)" class="col-12" variant="danger"           
+                          v-b-tooltip.hover
+                          title="Haz click para eliminar de tu lista de Registros">Eliminar del Registro</b-button>
+                        </b-col>
+                      </b-row>
                     </div>
                   </b-card-body>
                 </b-col>
               </b-row>
             </b-card>
             <EditForm />
+          </b-col>
+        </b-row>
+        <b-row v-else>
+          <b-col cols="12" md="10" class="mx-auto">
+            <h2 class="fw-bold display-6">Aún no has registrado ninguna abeja</h2>
+            <h3 class="my-4">Recuerda que si lográs avistar alguna, ve a la pestaña de especies y accede al botón de "Registrar Abeja"</h3>
+            <h4>Luego vuelve a esta pestaña para añadirle contenido adicional</h4>
           </b-col>
         </b-row>
       </b-container>
@@ -113,7 +125,10 @@ export default {
     ...mapActions(["borrarAbejas"]),
 
     borrarAbeja(abeja){
-      this.borrarAbejas(abeja)
+      const result = confirm("¿Seguro que quieres eliminar esta abeja de tu registro?")
+      if (result === true) {
+        this.borrarAbejas(abeja)
+      }
     }
   },
 };

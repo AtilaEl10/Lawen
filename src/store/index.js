@@ -3,9 +3,8 @@ import Vuex from "vuex";
 import axios from "axios";
 import firebase from "firebase";
 import router from "@/router/index.js";
-// import VuexPersistance from "vuex-persist";
 
-import createPersistedState from "vuex-persistedstate";
+// import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
@@ -30,7 +29,7 @@ export default new Vuex.Store({
     },
     registroAbejas: [],
   },
-  plugins: [createPersistedState()],
+  // plugins: [createPersistedState()],
 
   mutations: {
     //Log in
@@ -66,41 +65,24 @@ export default new Vuex.Store({
       }
     },
 
-    // Cargar API a state
-    cargarData(state, payload) {
-      state.especies = payload;
-      // console.log(state.especies);
-    },
-    /*
-    registrarAbeja(state, payload) {
-      const id = payload.id;
-      const img = payload.img;
-      const nombre = payload.nombre;
-      const nombrecien = payload.nombrecien;
-      const orden = payload.orden;
-      const familia = payload.familia;
-      const caracteristicas = payload.caracteristicas;
-      const habitat = payload.habitat;
-
-      const finder = state.registradas.find((obj) => obj.id === id);
-      if (!finder) {
-        const obj = {
-          id,
-          img,
-          nombre,
-          nombrecien,
-          orden,
-          familia,
-          caracteristicas,
-          habitat,
-        };
-        state.registradas.push(obj);
-        console.log(state.registradas);
-      } else {
-        alert("Ya tienes esta abeja en tu registro");
+    //Cambiar estados del log
+   /*
+    log(state) {
+      const isAuthenticated = localStorage.getItem("login");
+      if (isAuthenticated == "logueado") {
+        state.log = true
+      }
+      else if (isAuthenticated !== "logueado") {
+        state.log = false
       }
     },
     */
+
+    // Cargar API a state
+    cargarData(state, payload) {
+      state.especies = payload;
+    },
+
     // Agregar Abejas al registro en firebase
     async registrarAbeja(state, payload) {
       const db = firebase.firestore();
@@ -144,8 +126,6 @@ export default new Vuex.Store({
 
       const repetido = state.registradas.find((bee) => bee.id === abejita.id);
       if (!repetido) state.registradas.push(abejita);
-
-      console.log(state.registradas);
     },
 
     // Guardar data de Firebase
@@ -157,8 +137,6 @@ export default new Vuex.Store({
         (bee) => bee.id === abeja.id
       );
       if (!repetido) state.registroAbejas.push(abeja);
-
-      console.log(state.registroAbejas);
     },
     //Eliminar Abeja
     eliminarAbeja(state, payload){
@@ -178,7 +156,6 @@ export default new Vuex.Store({
         const req = await axios(url);
         const abejas = req.data;
         commit("cargarData", abejas);
-        // console.log(abejas);
       } catch (error) {
         console.log(error);
       }
@@ -237,21 +214,18 @@ export default new Vuex.Store({
       
       commit("eliminarAbeja", abeja)
       const idFirebase = payload.id
-      console.log(idFirebase);
       await firebase.firestore().collection("registradas").doc(idFirebase).delete()   
     },
     // Borrar abejas del registro
     async borrarRegistro({commit}, payload) {
-      const idFirebase = payload.id
-      console.log(idFirebase);
+      const registro = payload
+      const idFirebaseRegistro = registro.id
+      try {
+        await firebase.firestore().collection("registroAbejas").doc(idFirebaseRegistro).delete()   
+      } catch (error) {
+        console.log(error);
+      }
       commit()
-      await firebase.firestore().collection("registroAbejas").doc(idFirebase).delete()   
     }
   },
-  /*plugins: [
-    new VuexPersistance({
-      storage: window.localStorage,
-    }).plugin,
-    
-  ],*/
 });

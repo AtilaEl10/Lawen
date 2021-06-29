@@ -50,7 +50,7 @@
         </b-col>
         <b-col cols="8">
           <b-button
-            @click="agregar(), $bvModal.hide('bv-modal-example')"
+            @click="agregar(), $bvModal.hide('bv-modal-example3')"
             class="mt-4 col-12"
             variant="success"
             >Aceptar</b-button
@@ -114,15 +114,23 @@ export default {
   },
 
   methods: {
-    ...mapActions(["agregarRegistro"]),
+    ...mapActions(["agregarRegistro", "getRegistro"]),
     agregar() {
-      //const result = confirm("Seguro que quieres agregar el item?")
-      //if( result === true ) {
-      const registro = this.registro;
-      // if(!registro.id || registro.img || todos los registros) return;
-      this.agregarRegistro(registro);
-      //alert("")
-      //}
+      if(!this.registro.ubicacion.ref || !this.registro.ubicacion.comuna || !this.registro.ubicacion.region || !this.registro.linkImg){
+        alert("Debes llenar todos los campos para poder registrarla")
+      }else {
+        const result = confirm("¿Seguro que quieres aregar esta imagen al Registro de la Abeja?")
+        if (result === true) {
+          const registro = this.registro;
+          this.agregarRegistro(registro);
+          this.registro.ubicacion.ref = ""
+          this.registro.ubicacion.comuna = ""
+          this.registro.ubicacion.region = ""
+          this.registro.linkImg = ""
+          this.getRegistro();
+        }
+      }
+
     },
   },
   computed: {
