@@ -9,7 +9,7 @@
 <script>
 import Nav from "@/components/Nav.vue";
 import Footer from "@/components/Footer.vue";
-import { mapActions } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 
 export default {
   name: "App",
@@ -19,17 +19,16 @@ export default {
   },
 
   methods: {
-    ...mapActions(["getData", "getRegistro", "getAbejaFirebase", "log"]),
-    limpiar() {
-      localStorage.clear();
-    },
+    ...mapActions(["getData", "getRegistro", "getAbejaFirebase"]),
+    ...mapMutations(["logeo"])
+
   },
   created() {
     this.getData();
     this.getRegistro();
     this.getAbejaFirebase();
-    this.limpiar();
-    // this.log()
+    // this.limpiar();
+    this.logeo()
   },
 };
 </script>

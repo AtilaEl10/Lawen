@@ -11,6 +11,7 @@
     <section>
       <b-container class="mt-5">
         <b-row v-if="registradas.length > 0">
+          <!--Información de abejas registradas-->
           <b-col
             cols="12"
             lg="10"

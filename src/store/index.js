@@ -29,19 +29,20 @@ export default new Vuex.Store({
     },
     registroAbejas: [],
   },
+
   // plugins: [createPersistedState()],
 
   mutations: {
     //Log in
     async login(state) {
       if (!state.form && !state.form.email && !state.form.pass) return;
-      console.log(state.form.email);
-      console.log(state.form.pass);
+//      console.log(state.form.email);
+//     console.log(state.form.pass);
       try {
         const request = await firebase
           .auth()
           .signInWithEmailAndPassword(state.form.email, state.form.pass);
-        console.log(request);
+//        console.log(request);
         if (request && request !== null) {
           localStorage.setItem("login", "logueado");
           state.log = true;
@@ -66,8 +67,8 @@ export default new Vuex.Store({
     },
 
     //Cambiar estados del log
-   /*
-    log(state) {
+  
+    logeo(state) {
       const isAuthenticated = localStorage.getItem("login");
       if (isAuthenticated == "logueado") {
         state.log = true
@@ -76,7 +77,7 @@ export default new Vuex.Store({
         state.log = false
       }
     },
-    */
+  
 
     // Cargar API a state
     cargarData(state, payload) {

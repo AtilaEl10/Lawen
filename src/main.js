@@ -21,7 +21,7 @@ firebase.initializeApp(firebaseConfig);
 router.beforeEach((to, from, next) => {
   const isAuthenticated = localStorage.getItem("login");
   
-  console.log(isAuthenticated);
+  // console.log(isAuthenticated);
   if (
     to.name == "Registro" &&
     to.name !== "Home" &&

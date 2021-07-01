@@ -115,7 +115,7 @@ import { mapMutations, mapState } from "vuex";
 
 export default {
   name: "Nav",
-
+  
   methods: {
     ...mapMutations(["login", "logout"]),
   },

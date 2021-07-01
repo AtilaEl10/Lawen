@@ -37,21 +37,21 @@
               <b-row>
                 <b-col cols="1"></b-col>
                 <b-col cols="12" md="2">
-                  <a href="https://abejasdechile.com/">
+                  <a href="https://abejasdechile.com/" target="_blank">
                   <img 
                   src="https://i0.wp.com/abejasdechile.com/wp-content/uploads/2019/10/logotipo-fundacion-transparente.png?fit=1033%2C1042&ssl=1" 
                   alt=""
                   class="img-fluid p-2"></a>
                 </b-col>
                 <b-col cols="12" md="4">
-                  <a href="https://www.abejasnativaschile.cl/">
+                  <a href="https://www.abejasnativaschile.cl/" target="_blank">
                   <img 
                   src="https://www.abejasnativaschile.cl/wp-content/uploads/2015/08/logo3.png" 
                   alt=""
                   class="img-fluid p-2"></a>
                 </b-col>
                 <b-col cols="12" md="4">
-                  <a href="hhttps://fundacionphilippi.cl/wp-content/uploads/2020/05/Gu%C3%ADa_Polinizadores-GEFMonta%C3%B1a.pdf">
+                  <a href="hhttps://fundacionphilippi.cl/wp-content/uploads/2020/05/Gu%C3%ADa_Polinizadores-GEFMonta%C3%B1a.pdf" target="_blank">
                   <img 
                   src="https://gefmontana.mma.gob.cl/wp-content/themes/gefmontana/img/logo-2020.png" 
                   alt=""
